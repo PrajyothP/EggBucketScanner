@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="Logout"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" />
+
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/logout"
+        android:layout_marginTop="238dp"
+        android:progress="0"
+        android:visibility="invisible" />
+
+    <Button
+        android:id="@+id/upload"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/cardview_dark_background"
+        android:layout_marginTop="8dp"
+        android:text="Upload"
+        android:layout_alignParentBottom="true" />
+
+
+    <Button
+        android:id="@+id/galleryBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Scan from gallery"
+        android:layout_above="@id/upload" />
+
+
+    <Button
+        android:id="@+id/button_scan_12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Scan 12th Marksheet"
+        android:layout_above="@id/galleryBtn" />
+
+
+    <Button
+        android:id="@+id/button_scan_10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Scan 10th Marksheet"
+        android:layout_above="@id/button_scan_12" />
+
+
+    <Button
+        android:id="@+id/button_scan_pan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Scan Pan Card"
+        android:layout_above="@id/button_scan_10" />
+
+
+    <Button
+        android:id="@+id/button_scan_aadhar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Scan Aadhar Card"
+        android:layout_above="@id/button_scan_pan" />
+
+
+</RelativeLayout>
