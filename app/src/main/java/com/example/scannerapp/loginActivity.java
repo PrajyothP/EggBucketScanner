@@ -58,7 +58,6 @@ public class loginActivity extends AppCompatActivity {
         submit = findViewById(R.id.submitBtn);
         resendOtpView = findViewById(R.id.resendOtpView);
         resendOtp = findViewById(R.id.resendOtp);
-        check_signedIn_and_verified();
         FirebaseAuth.getInstance().getFirebaseAuthSettings().forceRecaptchaFlowForTesting(true);
         phone.setVisibility(View.VISIBLE);
         otpBtn.setVisibility(View.VISIBLE);
@@ -66,8 +65,7 @@ public class loginActivity extends AppCompatActivity {
         resendOtp.setClickable(false);
         resendOtp.setVisibility(View.GONE);
         resendOtpView.setVisibility(View.GONE);
-
-
+        check_signedIn_and_verified();
         otpBtn.setOnClickListener(v -> {
             String phoneNo = phone.getText().toString();
             if (!isValidPhoneNumber(phoneNo)) {
@@ -100,7 +98,7 @@ public class loginActivity extends AppCompatActivity {
             db.collection("Employees").document(FirebaseAuth.getInstance().getCurrentUser().getUid()).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if(task.isSuccessful()){
+                    if(task.isSuccessful() && task.getResult()!=null && task.getResult().exists()){
                         DocumentSnapshot document = task.getResult();
                         boolean verified = document.getBoolean("is_Verified");
                         if(verified){

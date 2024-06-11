@@ -100,8 +100,7 @@ public class MainActivity extends AppCompatActivity {
         storage = FirebaseStorage.getInstance();
         progressBar = findViewById(R.id.progressBar);
         db=FirebaseFirestore.getInstance();
-
-
+        checkIfexists(user.getUid());
         buttonScanAadhar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
