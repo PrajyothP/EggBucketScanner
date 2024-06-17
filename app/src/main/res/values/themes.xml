@@ -1,8 +1,9 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.ScannerApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    <style name="Base" parent="Theme.Material3.DayNight.NoActionBar">
+
+        <item name="background">#FEFBE7</item>
+        <item name="buttonStyle">#FEFBE7</item>
+        <item name="android:textViewStyle">#003285</item>
     </style>
 
     <style name="Theme.ScannerApp" parent="Base.Theme.ScannerApp" />
