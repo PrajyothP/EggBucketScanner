@@ -9,70 +9,56 @@
 
 
     <Button
-        android:id="@+id/check_in_btn"
+        android:id="@+id/Morning_check_in"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:text="Check In"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.284" />
-
-    <Button
-        android:id="@+id/check_out_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Check Out"
+        android:text="Morning check in"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.553"
-        app:layout_constraintStart_toEndOf="@+id/check_in_btn"
+        app:layout_constraintHorizontal_bias="0.106"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.284" />
+        app:layout_constraintVertical_bias="0.137" />
+
+    <Button
+        android:id="@+id/Morning_check_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Morning check out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toEndOf="@+id/Morning_check_in"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.137" />
 
     <EditText
         android:id="@+id/eggs_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Eggs left"
+        android:hint="Closing stock"
         android:inputType="numberSigned"
-        android:enabled="false"
-        android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/money_collected"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.901" />
+        app:layout_constraintVertical_bias="0.862" />
 
     <EditText
         android:id="@+id/money_collected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Money collected "
+        android:hint="Total cash collected"
         android:inputType="numberSigned"
-        android:enabled="false"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.733" />
-
-    <Button
-        android:id="@+id/logout_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/money_collected"
-        app:layout_constraintVertical_bias="0.474" />
+        app:layout_constraintVertical_bias="0.776" />
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -82,8 +68,45 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toTopOf="@+id/eggs_left"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.86" />
+        app:layout_constraintVertical_bias="0.852" />
+
+    <Button
+        android:id="@+id/Evening_check_in"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Evening check in"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.262" />
+
+    <Button
+        android:id="@+id/Evening_check_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Evening check out"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
+        app:layout_constraintStart_toEndOf="@+id/Evening_check_in"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.262" />
+
+    <EditText
+        android:id="@+id/Opening_stock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Opening stock"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/money_collected" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

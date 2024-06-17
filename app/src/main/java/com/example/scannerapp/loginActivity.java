@@ -106,6 +106,12 @@ public class loginActivity extends AppCompatActivity {
                             Intent intent = new Intent(loginActivity.this, checkIncheckOut.class);
                             startActivity(intent);
                         }
+                        else{
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Intent intent = new Intent(loginActivity.this,MainActivity.class);
+                            intent.putExtra("phone",FirebaseAuth.getInstance().getCurrentUser().getPhoneNumber());
+                            startActivity(intent);
+                        }
                     }
                     else{
                         progressBar.setVisibility(View.INVISIBLE);
