@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cream"
+    android:visibility="visible">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/newlogo4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Widget.AppCompat.ProgressBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:progress="0"
+        android:progressTint="@color/blue"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPhone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <EditText
+        android:id="@+id/editTextPhone"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:height="50dp"
+        android:background="@drawable/button_one"
+        android:ems="10"
+        android:fontFamily="@font/headland_one"
+        android:hint="Enter Phone number"
+        android:inputType="phone"
+        android:padding="18dp"
+        android:textColor="#000000"
+        android:textColorHint="#7E7C79"
+        app:layout_constraintBottom_toTopOf="@+id/otpField"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
+
+    <EditText
+        android:id="@+id/otpField"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="101dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="101dp"
+        android:background="@drawable/button_one"
+        android:ems="10"
+        android:fontFamily="@font/headland_one"
+        android:hint="Enter OTP"
+        android:inputType="number"
+        android:padding="18dp"
+        android:textColor="#000000"
+        android:textColorHint="#7E7C79"
+        android:textCursorDrawable="@drawable/button_one"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/otpBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhone" />
+
+    <Button
+        android:id="@+id/otpBtn"
+        android:layout_width="200dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="36dp"
+        android:layout_marginEnd="149dp"
+        android:width="100dp"
+        android:height="60dp"
+        android:background="@drawable/button_three"
+        android:fontFamily="@font/headland_one"
+        android:includeFontPadding="true"
+        android:padding="10dp"
+        android:text="Send OTP"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/submitBtn"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/otpField" />
+
+    <Button
+        android:id="@+id/submitBtn"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="29dp"
+        android:height="50dp"
+        android:background="@drawable/button_four"
+        android:fontFamily="@font/headland_one"
+        android:text="Submit"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/resendOtp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/otpBtn" />
+
+    <Button
+        android:id="@+id/resendOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="142dp"
+        android:layout_marginEnd="142dp"
+        android:background="@drawable/button_three"
+        android:fontFamily="@font/headland_one"
+        android:text="Resend OTP"
+        android:textColor="@color/white"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/resendOtpView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/submitBtn" />
+
+    <TextView
+        android:id="@+id/resendOtpView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginEnd="177dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="@font/headland_one"
+        android:text="TextView"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/resendOtp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
