@@ -51,6 +51,7 @@ public class loginActivity extends AppCompatActivity {
 
         FirebaseAppCheck.getInstance().installAppCheckProviderFactory(
                 PlayIntegrityAppCheckProviderFactory.getInstance());
+        FirebaseAuth.getInstance().getFirebaseAuthSettings().forceRecaptchaFlowForTesting(true);
         otpBtn = findViewById(R.id.otpBtn);
         otp = findViewById(R.id.otpField);
         phone = findViewById(R.id.editTextPhone);
@@ -58,7 +59,6 @@ public class loginActivity extends AppCompatActivity {
         submit = findViewById(R.id.submitBtn);
         resendOtpView = findViewById(R.id.resendOtpView);
         resendOtp = findViewById(R.id.resendOtp);
-        FirebaseAuth.getInstance().getFirebaseAuthSettings().forceRecaptchaFlowForTesting(true);
         phone.setVisibility(View.VISIBLE);
         otpBtn.setVisibility(View.VISIBLE);
         otpBtn.setClickable(false);

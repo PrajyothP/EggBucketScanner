@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private ProgressBar progressBar;
     private StorageReference ref;
-    private Button buttonUpload, buttonGallery, buttonScanAadhar , buttonScanPan , buttonScan10th , buttonScan12th , logout;
+    private Button buttonUpload, buttonGallery, buttonScanAadhar , buttonScanPan , buttonScan10th , buttonScan12th ;
     private static List<Bitmap> bitmaps = new ArrayList<>();
     private static String phoneNo ;
 
@@ -96,7 +97,6 @@ public class MainActivity extends AppCompatActivity {
         buttonScan12th = findViewById(R.id.button_scan_12);
         buttonGallery = findViewById(R.id.galleryBtn);
         buttonUpload = findViewById(R.id.upload);
-        logout = findViewById(R.id.logout);
         storage = FirebaseStorage.getInstance();
         progressBar = findViewById(R.id.progressBar);
         db=FirebaseFirestore.getInstance();
@@ -138,17 +138,7 @@ public class MainActivity extends AppCompatActivity {
                 uploadImages();
             }
         });
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FirebaseAuth.getInstance().signOut();
-                Toast.makeText(MainActivity.this, "Logged Out", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, loginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-            }
-        });
+
     }
     private void checkIfexists(String uid) {
         DocumentReference ref = db.collection("Employees").document(uid);
@@ -221,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(this, "Image added", Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
                         Toast.makeText(this, "Failed to load image", Toast.LENGTH_SHORT).show();
-                        e.printStackTrace();
+                        Log.e("MainActivity", "Failed to load image", e);
                     }
                 }
             });
