@@ -7,13 +7,23 @@
     android:padding="16dp">
 
 
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:text="Logout"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true" />
+
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="@style/Widget.AppCompat.ProgressBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="254dp"
+        android:layout_below="@id/logout"
+        android:layout_marginTop="238dp"
         android:progress="0"
         android:visibility="invisible" />
 
