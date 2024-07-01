@@ -14,17 +14,13 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.scannerapp.UserModel.User_detail_model;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -38,10 +34,10 @@ import java.util.Map;
 import java.util.Objects;
 
 public class checkIncheckOut extends AppCompatActivity {
-    private Bitmap morning_check_in_image , morning_check_out_image , evening_check_in_image , evening_check_out_image;
+    private Bitmap morning_check_in_image, morning_check_out_image, evening_check_in_image, evening_check_out_image;
     private ProgressBar progressBar;
-    private Button morning_check_in , morning_check_out , evening_check_in , evening_check_out;
-    private TextView eggs_left , money_collected , opening_stock;
+    private Button morning_check_in, morning_check_out, evening_check_in, evening_check_out;
+    private TextView eggs_left, money_collected, opening_stock;
     private FirebaseAuth mAuth;
     private String phone;
     private FirebaseStorage storage;
@@ -58,7 +54,6 @@ public class checkIncheckOut extends AppCompatActivity {
         opening_stock = findViewById(R.id.Opening_stock);
         eggs_left = findViewById(R.id.eggs_left);
         money_collected = findViewById(R.id.money_collected);
-        //disable_inputs();
         progressBar = findViewById(R.id.progressBar);
         storage = FirebaseStorage.getInstance();
         mAuth = FirebaseAuth.getInstance();
@@ -69,23 +64,22 @@ public class checkIncheckOut extends AppCompatActivity {
             finish();
         }
         phone = mAuth.getCurrentUser().getPhoneNumber();
-        //check_enable_inputs();
         morning_check_in.setOnClickListener(v -> {
-            if(opening_stock.getText().toString().isEmpty()){
+            if (opening_stock.getText().toString().isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter opening stock", Toast.LENGTH_SHORT).show();
                 return;
             }
             takePhoto("morning_check_in");
         });
         morning_check_out.setOnClickListener(v -> {
-            if(eggs_left.getText().toString().isEmpty() || money_collected.getText().toString().isEmpty()){
+            if (eggs_left.getText().toString().isEmpty() || money_collected.getText().toString().isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter closing stock and money collected", Toast.LENGTH_SHORT).show();
                 return;
             }
             takePhoto("morning_check_out");
         });
         evening_check_in.setOnClickListener(v -> {
-            if(opening_stock.getText().toString().isEmpty()){
+            if (opening_stock.getText().toString().isEmpty()) {
                 Toast.makeText(getApplicationContext(), "Please enter opening stock", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -99,6 +93,7 @@ public class checkIncheckOut extends AppCompatActivity {
             takePhoto("evening_check_out");
         });
     }
+
     private void takePhoto(String info) {
         switch (info) {
             case "morning_check_in" -> takePhotoIntent(morning_check_in_photo_intent);
@@ -141,7 +136,7 @@ public class checkIncheckOut extends AppCompatActivity {
     private final ActivityResultLauncher<Intent> evening_check_in_photo_intent = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                if(result.getResultCode() == RESULT_OK && result.getData() != null && result.getData().getExtras() != null){
+                if (result.getResultCode() == RESULT_OK && result.getData() != null && result.getData().getExtras() != null) {
                     evening_check_in_image = (Bitmap) result.getData().getExtras().get("data");
                     handle_evening_check_in();
                 }
@@ -150,12 +145,13 @@ public class checkIncheckOut extends AppCompatActivity {
     private final ActivityResultLauncher<Intent> evening_check_out_photo_intent = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             result -> {
-                if(result.getResultCode() == RESULT_OK && result.getData() != null && result.getData().getExtras() != null){
+                if (result.getResultCode() == RESULT_OK && result.getData() != null && result.getData().getExtras() != null) {
                     evening_check_out_image = (Bitmap) result.getData().getExtras().get("data");
                     handle_evening_check_out();
                 }
             }
     );
+
     private void handle_morning_check_in() {
         progressBar.setVisibility(View.VISIBLE);
         String date = LocalDate.now().toString();
@@ -173,7 +169,7 @@ public class checkIncheckOut extends AppCompatActivity {
                     } else {
                         User_detail_model user = new User_detail_model(
                                 LocalTime.now().toString(), "null", "null", "null",
-                                opening_stock.getText().toString(),"null", "null", "null","null","null"
+                                opening_stock.getText().toString(), "null", "null", "null", "null", "null"
                         );
                         ref.set(user).addOnCompleteListener(task1 -> {
                             if (task1.isSuccessful()) {
@@ -210,14 +206,12 @@ public class checkIncheckOut extends AppCompatActivity {
             ref.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     if (task.getResult() != null && task.getResult().exists()) {
-                        if(Objects.equals(task.getResult().getString("morning_check_in_time"), "null")){
+                        if (Objects.equals(task.getResult().getString("morning_check_in_time"), "null")) {
                             Toast.makeText(getApplicationContext(), "Not checked in", Toast.LENGTH_SHORT).show();
-                        }
-                        else if (!Objects.equals(task.getResult().getString("morning_check_out_time"), "null")) {
+                        } else if (!Objects.equals(task.getResult().getString("morning_check_out_time"), "null")) {
                             progressBar.setVisibility(View.INVISIBLE);
                             Toast.makeText(getApplicationContext(), "Already checked out", Toast.LENGTH_SHORT).show();
-                        }
-                        else {
+                        } else {
                             Map<String, Object> map = new HashMap<>();
                             map.put("morning_check_out_time", LocalTime.now().toString());
                             map.put("morning_money_collected", money);
@@ -245,7 +239,8 @@ public class checkIncheckOut extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), "Photo upload error", Toast.LENGTH_SHORT).show();
         });
     }
-    private void handle_evening_check_in(){
+
+    private void handle_evening_check_in() {
         progressBar.setVisibility(View.VISIBLE);
         String date = LocalDate.now().toString();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -254,29 +249,26 @@ public class checkIncheckOut extends AppCompatActivity {
         uploadPhoto(path, evening_check_in_image, taskSnapshot -> {
             ref.get().addOnCompleteListener(task -> {
                 progressBar.setVisibility(View.INVISIBLE);
-                if(task.isSuccessful()) {
-                    if(task.getResult() != null && task.getResult().exists()) {
-                       if(!Objects.equals(task.getResult().getString("evening_check_in_time"), "null")){
-                           Toast.makeText(getApplicationContext(), "Already checked in", Toast.LENGTH_SHORT).show();
-                       }
-                       else{
-                           Map<String, Object> map = new HashMap<>();
-                           map.put("evening_check_in_time", LocalTime.now().toString());
-                           map.put("evening_opening_stock", opening_stock.getText().toString());
-                           ref.update(map).addOnCompleteListener(task1 -> {
-                               if(task1.isSuccessful()){
-                                   Toast.makeText(getApplicationContext(), "Checked in", Toast.LENGTH_SHORT).show();
-                               }
-                               else{
-                                   Toast.makeText(getApplicationContext(), "Failed to check in", Toast.LENGTH_LONG).show();
-                           }
-                       });
-                    }
-                    }
-                    else{
+                if (task.isSuccessful()) {
+                    if (task.getResult() != null && task.getResult().exists()) {
+                        if (!Objects.equals(task.getResult().getString("evening_check_in_time"), "null")) {
+                            Toast.makeText(getApplicationContext(), "Already checked in", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Map<String, Object> map = new HashMap<>();
+                            map.put("evening_check_in_time", LocalTime.now().toString());
+                            map.put("evening_opening_stock", opening_stock.getText().toString());
+                            ref.update(map).addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(), "Checked in", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Failed to check in", Toast.LENGTH_LONG).show();
+                                }
+                            });
+                        }
+                    } else {
                         //Create new only for evening check in
                         User_detail_model user = new User_detail_model(
-                                "null","null",LocalTime.now().toString(), "null","null",opening_stock.getText().toString(),"null","null","null",
+                                "null", "null", LocalTime.now().toString(), "null", "null", opening_stock.getText().toString(), "null", "null", "null",
                                 "null"
                         );
                         ref.set(user).addOnCompleteListener(task1 -> {
@@ -287,60 +279,56 @@ public class checkIncheckOut extends AppCompatActivity {
                             }
                         });
                     }
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Network error", Toast.LENGTH_SHORT).show();
                 }
                 progressBar.setVisibility(View.INVISIBLE);
             });
-        },e -> {
+        }, e -> {
             Toast.makeText(getApplicationContext(), "Photo upload error", Toast.LENGTH_SHORT).show();
         });
     }
-    private void handle_evening_check_out(){
+
+    private void handle_evening_check_out() {
         progressBar.setVisibility(View.VISIBLE);
         String date = LocalDate.now().toString();
         DocumentReference ref = FirebaseFirestore.getInstance().collection(date).document(phone);
         String path = "Daily_Info/" + phone + "/" + date + "/" + "evening_check_out" + ".jpg";
-        uploadPhoto(path,evening_check_out_image,taskSnapshot ->{
+        uploadPhoto(path, evening_check_out_image, taskSnapshot -> {
             ref.get().addOnCompleteListener(task -> {
-                if(task.isSuccessful()){
-                    if(task.getResult() != null && task.getResult().exists()){
-                        if(Objects.equals(task.getResult().getString("evening_check_in_time"), "null")){
+                if (task.isSuccessful()) {
+                    if (task.getResult() != null && task.getResult().exists()) {
+                        if (Objects.equals(task.getResult().getString("evening_check_in_time"), "null")) {
                             Toast.makeText(getApplicationContext(), "Not checked in", Toast.LENGTH_SHORT).show();
-                        }
-                        else if(!Objects.equals(task.getResult().getString("evening_check_out_time"), "null")){
+                        } else if (!Objects.equals(task.getResult().getString("evening_check_out_time"), "null")) {
                             Toast.makeText(getApplicationContext(), "Already checked out", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
+                        } else {
                             Map<String, Object> map = new HashMap<>();
                             map.put("evening_check_out_time", LocalTime.now().toString());
                             map.put("evening_closing_stock", eggs_left.getText().toString());
                             map.put("evening_money_collected", money_collected.getText().toString());
                             ref.update(map).addOnCompleteListener(task1 -> {
-                                if(task1.isSuccessful()){
+                                if (task1.isSuccessful()) {
                                     Toast.makeText(getApplicationContext(), "Checked out", Toast.LENGTH_SHORT).show();
-                                }
-                                else{
+                                } else {
                                     Toast.makeText(getApplicationContext(), "Failed to check out", Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
-                    }
-                    else{
+                    } else {
                         progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getApplicationContext(), "Not checked in", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), "Network error", Toast.LENGTH_SHORT).show();
                 }
                 progressBar.setVisibility(View.INVISIBLE);
             });
-        },e -> {
+        }, e -> {
             Toast.makeText(getApplicationContext(), "Photo upload error", Toast.LENGTH_SHORT).show();
         });
     }
+
     private void uploadPhoto(String path, Bitmap image, OnSuccessListener<UploadTask.TaskSnapshot> onSuccessListener, OnFailureListener onFailureListener) {
         if (path.isEmpty() || image == null) {
             Toast.makeText(getApplicationContext(), "Please take a photo", Toast.LENGTH_SHORT).show();
@@ -351,30 +339,5 @@ public class checkIncheckOut extends AppCompatActivity {
         image.compress(Bitmap.CompressFormat.JPEG, 50, arr);
         UploadTask task = ref.putBytes(arr.toByteArray());
         task.addOnSuccessListener(onSuccessListener).addOnFailureListener(onFailureListener);
-    }
-    private void disable_inputs(){
-        eggs_left.setEnabled(false);
-        money_collected.setEnabled(false);
-        opening_stock.setEnabled(false);
-        eggs_left.setText("");
-        money_collected.setText("");
-        opening_stock.setText("");
-    }
-    private void check_enable_inputs() {
-        progressBar.setVisibility(View.VISIBLE);
-        DocumentReference ref = FirebaseFirestore.getInstance().collection(phone).document(LocalDate.now().toString());
-        ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.isSuccessful() && task.getResult() != null && task.getResult().exists()) {
-                    eggs_left.setEnabled(true);
-                    money_collected.setEnabled(true);
-                }
-                else{
-
-                }
-                progressBar.setVisibility(View.INVISIBLE);
-            }
-        });
     }
 }

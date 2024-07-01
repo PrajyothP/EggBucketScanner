@@ -250,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
             uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    Toast.makeText(MainActivity.this, "Image uploaded", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this, "Images uploaded", Toast.LENGTH_LONG).show();
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
