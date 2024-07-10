@@ -48,9 +48,6 @@ public class loginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         FirebaseApp.initializeApp(this);
-
-        FirebaseAppCheck.getInstance().installAppCheckProviderFactory(
-                PlayIntegrityAppCheckProviderFactory.getInstance());
         FirebaseAuth.getInstance().getFirebaseAuthSettings().forceRecaptchaFlowForTesting(true);
         otpBtn = findViewById(R.id.otpBtn);
         otp = findViewById(R.id.otpField);

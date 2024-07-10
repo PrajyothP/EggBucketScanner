@@ -23,11 +23,12 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="68dp"
         android:fontFamily="@font/headland_one"
         android:text="Inventory Tracker"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView2" />
 
@@ -36,7 +37,7 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="156dp"
         android:background="@drawable/button_two"
         android:elevation="20dp"
         android:fontFamily="sans-serif-medium"
@@ -53,6 +54,7 @@
         android:layout_width="178dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
+        android:layout_marginTop="156dp"
         android:background="@drawable/button_two"
         android:elevation="20dp"
         android:fontFamily="sans-serif-medium"
@@ -81,7 +83,7 @@
         app:layout_constraintEnd_toStartOf="@+id/Evening_check_out"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Morning_check_in"
-        app:layout_constraintVertical_bias="0.079" />
+        app:layout_constraintVertical_bias="0.166" />
 
     <Button
         android:id="@+id/Evening_check_out"
@@ -100,74 +102,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/Evening_check_in"
         app:layout_constraintTop_toBottomOf="@+id/Morning_check_out"
-        app:layout_constraintVertical_bias="0.077" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:progressTint="@color/blue"
-        android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Evening_check_out" />
-
-    <EditText
-        android:id="@+id/Opening_stock"
-        android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#7CB342"
-        android:backgroundTintMode="screen"
-        android:ems="10"
-        android:fontFamily="@font/headland_one"
-        android:hint="Opening stock"
-        android:inputType="numberSigned"
-        android:padding="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progressBar" />
-
-    <EditText
-        android:id="@+id/eggs_left"
-        android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="28dp"
-        android:backgroundTint="#7CB342"
-        android:backgroundTintMode="screen"
-        android:ems="10"
-        android:fontFamily="@font/headland_one"
-        android:hint="Closing stock"
-        android:inputType="numberSigned"
-        android:padding="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/money_collected"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Opening_stock"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/money_collected"
-        android:layout_width="250dp"
-        android:layout_height="70dp"
-        android:layout_marginBottom="44dp"
-        android:backgroundTint="#7CB342"
-        android:backgroundTintMode="screen"
-        android:ems="10"
-        android:fontFamily="@font/headland_one"
-        android:hint="Total cash collected"
-        android:inputType="numberSigned"
-        android:padding="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Opening_stock"
-        app:layout_constraintVertical_bias="0.968" />
+        app:layout_constraintVertical_bias="0.167" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
