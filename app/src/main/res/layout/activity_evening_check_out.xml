@@ -5,36 +5,50 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cream"
     tools:context=".morning_check_out">
 
     <Button
         android:id="@+id/submit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="189dp"
+        android:layout_height="63dp"
+        android:background="@drawable/button_four"
+        android:elevation="20dp"
+        android:fontFamily="sans-serif-medium"
+        android:foregroundTint="#1A1717"
+        android:padding="15dp"
+        android:shadowColor="#7C7474"
         android:text="Submit"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.918" />
+        app:layout_constraintVertical_bias="0.912" />
 
     <Button
         android:id="@+id/take_photo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="189dp"
+        android:layout_height="63dp"
+        android:background="@drawable/button_one"
+        android:fontFamily="sans-serif-medium"
+        android:foregroundTint="#1A1717"
+        android:padding="15dp"
+        android:shadowColor="#7C7474"
         android:text="Take photo"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/submit"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.898" />
+        app:layout_constraintVertical_bias="0.887" />
 
     <EditText
         android:id="@+id/money_collected"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
         android:ems="10"
         android:hint="Money collected"
         android:inputType="numberSigned"
@@ -48,8 +62,9 @@
         android:id="@+id/closingStock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:fontFamily="sans-serif-medium"
         android:ems="10"
+        android:layout_marginBottom="8dp"
         android:hint="Closing stock"
         android:inputType="numberSigned"
         app:layout_constraintBottom_toTopOf="@+id/money_collected"
