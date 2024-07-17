@@ -29,6 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -42,7 +43,7 @@ public class loginActivity extends AppCompatActivity {
     private String verification;
     private PhoneAuthProvider.ForceResendingToken resendToken;
     private CountDownTimer countDownTimer;
-
+    private static boolean status = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,20 +63,24 @@ public class loginActivity extends AppCompatActivity {
         resendOtp.setClickable(false);
         resendOtp.setVisibility(View.GONE);
         resendOtpView.setVisibility(View.GONE);
-        check_signedIn_and_verified();
+        check_signedIn();
         otpBtn.setOnClickListener(v -> {
-            String phoneNo = phone.getText().toString();
+            progressBar.setVisibility(View.VISIBLE);
+            String phoneNo =  phone.getText().toString();
             if (!isValidPhoneNumber(phoneNo)) {
                 Toast.makeText(this, "Enter a valid phone number", Toast.LENGTH_SHORT).show();
+                progressBar.setVisibility(View.INVISIBLE);
                 return;
             }
-          sendOtp(phoneNo, true);
+            phoneNo = "+91" + phoneNo;
+            check_valid_user(phoneNo);
         });
 
 
         submit.setOnClickListener(v -> {
             String otpText = otp.getText().toString();
             if (otpText.length() != 6) {
+                progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(this, "Enter a valid OTP", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -86,6 +91,16 @@ public class loginActivity extends AppCompatActivity {
 
         resendOtp.setOnClickListener(v -> sendOtp(phone.getText().toString(), false));
     }
+    private void check_signedIn(){
+        if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+            Intent intent = new Intent(loginActivity.this, checkIncheckOut.class);
+            startActivity(intent);
+        }
+        else{
+            Toast.makeText(loginActivity.this,"Sign In",Toast.LENGTH_SHORT).show();
+        }
+    }
+    //Only if verification is used
     private void check_signedIn_and_verified(){
         progressBar.setVisibility(View.VISIBLE);
         phone.setClickable(false);
@@ -126,7 +141,22 @@ public class loginActivity extends AppCompatActivity {
             otpBtn.setClickable(true);
         }
     }
-
+    private void check_valid_user(String phoneNo){
+        progressBar.setVisibility(View.VISIBLE);
+        db = FirebaseFirestore.getInstance();
+        Task<DocumentSnapshot> ref = db.collection("Employees").document(phoneNo).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.getResult().exists()){
+                    sendOtp(phoneNo,true);
+                }
+                else{
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(loginActivity.this, "User not registered", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
     private boolean isValidPhoneNumber(String phoneNo) {
         Pattern pattern = Pattern.compile("^\\d{10}$");
         Matcher matcher = pattern.matcher(phoneNo);
@@ -141,7 +171,7 @@ public class loginActivity extends AppCompatActivity {
         }
         progressBar.setVisibility(View.VISIBLE);
         PhoneAuthOptions.Builder options = PhoneAuthOptions.newBuilder(FirebaseAuth.getInstance())
-                .setPhoneNumber("+91" + phoneNumber)
+                .setPhoneNumber(phoneNumber)
                 .setTimeout(OTP_TIMEOUT, TimeUnit.MILLISECONDS)
                 .setActivity(loginActivity.this)
                 .setCallbacks(new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
@@ -186,7 +216,8 @@ public class loginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
-                    check_signedIn_and_verified();
+                    Intent intent = new Intent(loginActivity.this, checkIncheckOut.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "OTP verification failed", Toast.LENGTH_SHORT).show();
                 }
