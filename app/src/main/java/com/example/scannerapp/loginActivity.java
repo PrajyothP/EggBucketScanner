@@ -22,10 +22,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.FirebaseNetworkException;
+import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.appcheck.FirebaseAppCheck;
 import com.google.firebase.appcheck.playintegrity.PlayIntegrityAppCheckProviderFactory;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
@@ -34,7 +37,6 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class loginActivity extends AppCompatActivity {
-    private static final String TAG = "LoginActivity";
     private static final long OTP_TIMEOUT = 60000;
     private Button otpBtn, submit, resendOtp;
     private TextView phone, otp, resendOtpView;
@@ -93,6 +95,7 @@ public class loginActivity extends AppCompatActivity {
     }
     private void check_signedIn(){
         if(FirebaseAuth.getInstance().getCurrentUser()!=null){
+            Toast.makeText(loginActivity.this,"Already Signed In",Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(loginActivity.this, checkIncheckOut.class);
             startActivity(intent);
         }
@@ -181,14 +184,24 @@ public class loginActivity extends AppCompatActivity {
                         otp.setVisibility(View.VISIBLE);
                         submit.setVisibility(View.VISIBLE);
                     }
-
-                    @Override
                     public void onVerificationFailed(@NonNull FirebaseException e) {
-                        Toast.makeText(getApplicationContext(), "Verification failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Log.e("VerificationFailed", "Error: " + e.getMessage(), e);
+                        if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                            // Invalid request
+                            Toast.makeText(getApplicationContext(), "Invalid phone number.", Toast.LENGTH_SHORT).show();
+                        } else if (e instanceof FirebaseTooManyRequestsException) {
+                            // SMS quota exceeded
+                            Toast.makeText(getApplicationContext(), "SMS quota exceeded. Try again later.", Toast.LENGTH_SHORT).show();
+                        } else if (e instanceof FirebaseNetworkException) {
+                            // Network error
+                            Toast.makeText(getApplicationContext(), "Network error. Please check your internet connection.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Other errors
+                            Toast.makeText(getApplicationContext(), "Verification failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
                         progressBar.setVisibility(View.GONE);
                         otp.setVisibility(View.VISIBLE);
                         submit.setVisibility(View.VISIBLE);
-                        Log.e(TAG, "Verification failed", e);
                     }
 
                     @Override

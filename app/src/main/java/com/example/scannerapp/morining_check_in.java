@@ -1,6 +1,7 @@
 package com.example.scannerapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -14,16 +15,20 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.scannerapp.UserModel.User_detail_model;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -103,19 +108,25 @@ public class morining_check_in extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     if (task.getResult() != null && task.getResult().exists()) {
                         Toast.makeText(getApplicationContext(), "Already signed in for today", Toast.LENGTH_LONG).show();
-                        return;
                     } else {
-                        User_detail_model user = new User_detail_model(
-                                LocalTime.now().toString(), "null", "null", "null",
-                                opening_stock.getText().toString(), "null", "null", "null", "null", "null"
-                        );
-                        ref.set(user).addOnCompleteListener(task1 -> {
-                            if (task1.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "Checked in", Toast.LENGTH_LONG).show();
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Failed to check in", Toast.LENGTH_LONG).show();
-                                Log.e("FirestoreError", "Error setting document", task1.getException());
-                            }
+                        // Ensure local cache is updated before proceeding
+                        checkLocalCacheForName(() -> {
+                            SharedPreferences pref = getSharedPreferences("cache", MODE_PRIVATE);
+                            String outlet = pref.getString("name", "null");
+                            User_detail_model user = new User_detail_model(
+                                    LocalTime.now().toString(), "null", "null", "null",
+                                    opening_stock.getText().toString(), "null",
+                                    "null", "null", "null",
+                                    "null", outlet
+                            );
+                            ref.set(user).addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    Toast.makeText(getApplicationContext(), "Checked in", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(getApplicationContext(), "Failed to check in", Toast.LENGTH_LONG).show();
+                                    Log.e("FirestoreError", "Error setting document", task1.getException());
+                                }
+                            });
                         });
                     }
                 } else {
@@ -129,6 +140,57 @@ public class morining_check_in extends AppCompatActivity {
             Log.e("UploadError", "Error uploading photo", e);
         });
     }
+
+    private void checkLocalCacheForName(Runnable callback) {
+        SharedPreferences pref = getSharedPreferences("cache", MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        String name = pref.getString("name", "null");
+        if (name.equals("null")) {
+            if (mAuth.getCurrentUser() == null) {
+                Intent intent = new Intent(morining_check_in.this, loginActivity.class);
+                Toast.makeText(getApplicationContext(), "Please login", Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+                finish();
+                return;
+            }
+            String phone = mAuth.getCurrentUser().getPhoneNumber();
+            if (phone == null) {
+                Toast.makeText(getApplicationContext(), "Phone number is unavailable", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
+            DocumentReference ref = db.collection("Employees").document(phone);
+            ref.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        String fetchedName = document.getString("name");
+                        if (fetchedName != null && !fetchedName.isEmpty()) {
+                            editor.putString("name", fetchedName);
+                            editor.apply();
+                            Log.d("CacheUpdate", "Name successfully updated in cache: " + fetchedName);
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Name field is empty", Toast.LENGTH_SHORT).show();
+                            Log.e("CacheUpdate", "Name field is empty in Firestore document.");
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Document does not exist", Toast.LENGTH_SHORT).show();
+                        Log.e("CacheUpdate", "Document does not exist in Firestore.");
+                    }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Network error", Toast.LENGTH_SHORT).show();
+                    Log.e("CacheUpdate", "Error getting document", task.getException());
+                }
+                // Invoke callback after completing cache update
+                callback.run();
+            });
+        } else {
+            // Invoke callback if cache check is not needed
+            callback.run();
+        }
+    }
+
+
     private void uploadPhoto(String path, Bitmap image, OnSuccessListener<UploadTask.TaskSnapshot> onSuccessListener, OnFailureListener onFailureListener) {
         if (path.isEmpty() || image == null) {
             Toast.makeText(getApplicationContext(), "Please take a photo", Toast.LENGTH_SHORT).show();

@@ -6,6 +6,7 @@ public class UserModel {
     private String phoneNo;
     private boolean is_Verified;
     private Timestamp time_created;
+    private String name;
 
     public UserModel() {
         is_Verified = false;
@@ -14,10 +15,11 @@ public class UserModel {
         this.phoneNo = phoneNo;
         is_Verified = false;
     }
-    public UserModel(String phoneNo, boolean is_Verified, Timestamp time_created) {
+    public UserModel(String phoneNo, boolean is_Verified, Timestamp time_created,String name) {
         this.phoneNo = phoneNo;
         this.is_Verified = is_Verified;
         this.time_created = time_created;
+        this.name=name;
     }
 
     public boolean isIs_Verified() {

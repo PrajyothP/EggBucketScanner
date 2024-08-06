@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     private void createUser(DocumentReference ref) {
-        UserModel user = new UserModel(phoneNo,false, Timestamp.now());
+        //UserModel user = new UserModel(phoneNo,false, Timestamp.now());
         ref.set(user).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

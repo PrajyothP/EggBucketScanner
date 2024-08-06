@@ -1,7 +1,7 @@
 package com.example.scannerapp.UserModel;
 
 public class User_detail_model {
-    private String morning_check_in_time , morning_check_out_time ,evening_check_in_time,evening_check_out_time , morning_opening_stock , evening_opening_stock , morning_closing_stock , evening_closing_stock , morning_money_collected , evening_money_collected;
+    private String morning_check_in_time , morning_check_out_time ,evening_check_in_time,evening_check_out_time , morning_opening_stock , evening_opening_stock , morning_closing_stock , evening_closing_stock , morning_money_collected , evening_money_collected , name;
 
     public String getMorning_closing_stock() {
         return morning_closing_stock;
@@ -23,10 +23,12 @@ public class User_detail_model {
         return morning_check_in_time;
     }
 
+    public String getName(){return name;}
+
     public void setMorning_check_in_time(String morning_check_in_time) {
         this.morning_check_in_time = morning_check_in_time;
     }
-
+    public void setName(String name) {this.name=name;}
     public String getMorning_check_out_time() {
         return morning_check_out_time;
     }
@@ -69,7 +71,7 @@ public class User_detail_model {
     }
     public User_detail_model(){}
 
-    public User_detail_model(String morning_check_in_time, String morning_check_out_time, String evening_check_in_time, String evening_check_out_time, String morning_opening_stock, String evening_opening_stock, String morning_closing_stock, String evening_closing_stock, String morning_money_collected, String evening_money_collected) {
+    public User_detail_model(String morning_check_in_time, String morning_check_out_time, String evening_check_in_time, String evening_check_out_time, String morning_opening_stock, String evening_opening_stock, String morning_closing_stock, String evening_closing_stock, String morning_money_collected, String evening_money_collected,String name) {
         this.morning_check_in_time = morning_check_in_time;
         this.morning_check_out_time = morning_check_out_time;
         this.evening_check_in_time = evening_check_in_time;
@@ -80,5 +82,6 @@ public class User_detail_model {
         this.evening_closing_stock = evening_closing_stock;
         this.morning_money_collected = morning_money_collected;
         this.evening_money_collected = evening_money_collected;
+        this.name=name;
     }
 }
